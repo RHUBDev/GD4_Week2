@@ -5,7 +5,9 @@ using UnityEngine;
 public class Bullet : MonoBehaviour
 {
     private float splosionforce = 10000f;
-    
+
+   public GameObject splosionprefab;
+
     private void Update()
     {
         Debug.Log("bullet pos = " + gameObject.transform.position);
@@ -20,6 +22,7 @@ public class Bullet : MonoBehaviour
             if (rig)
             {
                 rig.AddExplosionForce(splosionforce, gameObject.transform.position, 10f);
+                GameObject splosion = Instantiate(splosionprefab, gameObject.transform.position, gameObject.transform.rotation);
                 Destroy(gameObject);
             }
         } 
