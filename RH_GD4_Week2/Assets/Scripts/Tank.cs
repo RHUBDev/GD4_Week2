@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using TMPro;
 
 public class Tank : MonoBehaviour
 {
@@ -11,10 +13,35 @@ public class Tank : MonoBehaviour
     public GameObject bulletprefab;
     public Transform gunpoint;
     private float bulletforce = 40f;
+    public TMP_Text mainmessage;
     // Start is called before the first frame update
     void Start()
     {
-        
+        Time.timeScale = 0.0f;
+        StartCoroutine(DoStart());
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if(collision.gameObject.tag == "Police")
+        {
+            StartCoroutine(DoEnd());
+            Time.timeScale = 0.0f;
+        }
+    }
+
+    IEnumerator DoEnd()
+    {
+        mainmessage.text = "BUSTED!";
+        yield return new WaitForSecondsRealtime(3);
+        SceneManager.LoadScene("RHScene1");
+    }
+
+    IEnumerator DoStart()
+    {
+        yield return new WaitForSecondsRealtime(2);
+        mainmessage.text = "";
+        Time.timeScale = 1.0f;
     }
 
     // Update is called once per frame
