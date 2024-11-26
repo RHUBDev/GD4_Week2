@@ -52192,10 +52192,6 @@ PrefabInstance:
     - {fileID: 4553097992365807418, guid: aea2a6cdcc9d7944090d528486ebaee1, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects:
-    - targetCorrespondingSourceObject: {fileID: 489324, guid: aea2a6cdcc9d7944090d528486ebaee1,
-        type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1704015174}
     - targetCorrespondingSourceObject: {fileID: 496702, guid: aea2a6cdcc9d7944090d528486ebaee1,
         type: 3}
       insertIndex: -1
@@ -52243,12 +52239,6 @@ MonoBehaviour:
     type: 3}
   gunpoint: {fileID: 1368740938}
   mainmessage: {fileID: 1324497133}
---- !u!4 &1340999963 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 489324, guid: aea2a6cdcc9d7944090d528486ebaee1,
-    type: 3}
-  m_PrefabInstance: {fileID: 1340999952}
-  m_PrefabAsset: {fileID: 0}
 --- !u!54 &1340999964
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -66799,6 +66789,7 @@ GameObject:
   - component: {fileID: 1704015171}
   - component: {fileID: 1704015170}
   - component: {fileID: 1704015175}
+  - component: {fileID: 1704015176}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -66881,13 +66872,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1704015169}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.17364816, y: 0, z: 0, w: 0.9848078}
-  m_LocalPosition: {x: 0, y: 5, z: -3}
+  m_LocalRotation: {x: 0.38268343, y: -0, z: -0, w: 0.92387956}
+  m_LocalPosition: {x: 121.18564, y: 30, z: 27.141396}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1340999963}
-  m_LocalEulerAnglesHint: {x: 20, y: 0, z: 0}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 45, y: 0, z: 0}
 --- !u!114 &1704015175
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -66932,6 +66923,19 @@ MonoBehaviour:
     m_MipBias: 0
     m_VarianceClampScale: 0.9
     m_ContrastAdaptiveSharpening: 0
+--- !u!114 &1704015176
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1704015169}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7cb6347ee62364c4e8bbd6489905a925, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tank: {fileID: 1340999953}
 --- !u!1001 &1704196083
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -85109,6 +85113,7 @@ SceneRoots:
   - {fileID: 1657413772}
   - {fileID: 1416758924}
   - {fileID: 1340999952}
+  - {fileID: 1704015174}
   - {fileID: 1660094071}
   - {fileID: 1176813899}
   - {fileID: 774333303}

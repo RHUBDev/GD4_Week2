@@ -34,7 +34,7 @@ public class Tank : MonoBehaviour
     {
         mainmessage.text = "BUSTED!";
         yield return new WaitForSecondsRealtime(3);
-        SceneManager.LoadScene("RHScene1");
+        SceneManager.LoadScene("OnePlayer");
     }
 
     IEnumerator DoStart()
