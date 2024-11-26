@@ -17,21 +17,14 @@ public class Tank : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        //Start game paused
         Time.timeScale = 0.0f;
         StartCoroutine(DoStart());
     }
 
-    private void OnCollisionEnter(Collision collision)
+    public IEnumerator DoEnd()
     {
-        if(collision.gameObject.tag == "Police")
-        {
-            StartCoroutine(DoEnd());
-            Time.timeScale = 0.0f;
-        }
-    }
-
-    IEnumerator DoEnd()
-    {
+        //Show end game message, and restart after 3 seconds
         mainmessage.text = "BUSTED!";
         yield return new WaitForSecondsRealtime(3);
         SceneManager.LoadScene("OnePlayer");
@@ -39,6 +32,7 @@ public class Tank : MonoBehaviour
 
     IEnumerator DoStart()
     {
+        //After 2 seconds, start game
         yield return new WaitForSecondsRealtime(2);
         mainmessage.text = "";
         Time.timeScale = 1.0f;
@@ -49,11 +43,12 @@ public class Tank : MonoBehaviour
     {
         float horiz = Input.GetAxis("Horizontal");
         float vert = Input.GetAxis("Vertical");
-
+        //Rotate Tank
         gameObject.transform.Rotate(0, turnspeed * Time.deltaTime * horiz, 0);
-
+        //Move Tank
         gameObject.transform.Translate(0, 0, movespeed * Time.deltaTime * vert);
 
+        //Get turret input
         float turrhoriz = 0;
         if (Input.GetKey(KeyCode.Q))
         {
@@ -63,10 +58,12 @@ public class Tank : MonoBehaviour
         {
             turrhoriz += 1;
         }
+        //TurnTurret
         turretobj.transform.Rotate(0, turretturnspeed * Time.deltaTime * turrhoriz, 0);
         
         if (Input.GetKeyDown(KeyCode.Space))
         {
+            //Shoot bullet
             GameObject bullet1 = Instantiate(bulletprefab, gunpoint.transform.position, gunpoint.transform.rotation);
             bullet1.GetComponent<Rigidbody>().AddForce(gunpoint.transform.forward * bulletforce, ForceMode.Impulse);
         }
