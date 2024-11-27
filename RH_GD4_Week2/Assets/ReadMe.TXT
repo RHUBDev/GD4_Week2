@@ -1,6 +1,7 @@
 Move with WASD
 Q/E to move turret
-Space to fire turret.
+Space to fire turret
+C to toggle first person mode.
 
 Do as much damage as possible.
 Avoid the cop cars!

@@ -13,16 +13,19 @@ public class TankCamera : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.C))
         {
+            //Toggle camera mode
             isfirstperson = !isfirstperson;
         }
-        //Make the camera follow the tank, 30m behind it and 30m up
+
         if (isfirstperson)
         {
+            //First person camera
             gameObject.transform.position = tank.transform.position + tank.transform.forward * fpscameraoffset.z + Vector3.up * fpscameraoffset.y;
             gameObject.transform.rotation = Quaternion.Euler(tank.transform.eulerAngles.x + 10f, tank.transform.eulerAngles.y, tank.transform.eulerAngles.z);
         }
         else
         {
+            //Make the camera follow the tank, 30m behind it and 30m up
             gameObject.transform.position = tank.transform.position - tank.transform.forward * 30f + Vector3.up * 30f;
             transform.LookAt(tank.transform);
         }
