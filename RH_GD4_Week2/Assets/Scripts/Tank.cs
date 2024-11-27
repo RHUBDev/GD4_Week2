@@ -19,9 +19,12 @@ public class Tank : MonoBehaviour
     public TMP_Text endmessage;
     private int score = 0;
     private float damagetime = 2f;
+    private bool grounded = true;
+    public GameObject[] wheels;
     // Start is called before the first frame update
     void Start()
     {
+        
         //Start game paused
         score = 0;
         Time.timeScale = 0.0f;
@@ -33,7 +36,23 @@ public class Tank : MonoBehaviour
         //Show end game message, and restart after 3 seconds
         damagemessage.text = "";
         mainmessage.text = "BUSTED!";
-        endmessage.text = ""
+        int highscore = 0;
+        if (PlayerPrefs.HasKey("HighScore"))
+        {
+            highscore = PlayerPrefs.GetInt("HighScore");
+        }
+        if (score > highscore)
+        {
+            int diff = score - highscore;
+            //I also googled how to do this Rich Text stuff (colour text) cos I forgot 
+            endmessage.text = "Congrats!\n<color=green>+$" + diff.ToString("n0") + "</color>";
+            PlayerPrefs.SetInt("HighScore", score);
+        }
+        else
+        {
+            int diff = highscore - score;
+            endmessage.text = "Unlucky!:\n<color=red>-$" + diff.ToString("n0") + "</color>";
+        }
         yield return new WaitForSecondsRealtime(3);
         SceneManager.LoadScene("OnePlayer");
     }
@@ -51,11 +70,44 @@ public class Tank : MonoBehaviour
     {
         float horiz = Input.GetAxis("Horizontal");
         float vert = Input.GetAxis("Vertical");
-        //Rotate Tank
-        gameObject.transform.Rotate(0, turnspeed * Time.deltaTime * horiz, 0);
-        //Move Tank
-        gameObject.transform.Translate(0, 0, movespeed * Time.deltaTime * vert);
+        //RaycastHit[] hit;
+        grounded = false;
+        foreach (GameObject wheel in wheels)
+        {
+            //Raycast down from the outer edge of each tyre to see if it is near enough to the ground, then set grounded to true if any of them hit
+            float sideoffset = 0f;
+            if (wheel.name.EndsWith("l"))
+            {
+                sideoffset = -0.226f;
+            }
+            else if (wheel.name.EndsWith("r"))
+            {
+                sideoffset = 0.226f;
+            }
+            RaycastHit[] hit = Physics.RaycastAll(wheel.transform.position + wheel.transform.right * sideoffset, -Vector3.up, 0.95f);
+            if (hit.Length > 0)
+            {
+                Debug.Log("True");
+                grounded = true;
+            }
+        }
 
+        if (grounded)
+        {
+            Debug.Log("True");
+        }
+        else
+        {
+            Debug.Log("False");
+        }
+        //If not rotated more than 60 degrees from being flat, and if 'grounded', then add inputs
+        if ((transform.eulerAngles.x < 60 || transform.eulerAngles.x > 300) && (transform.eulerAngles.z < 60 || transform.eulerAngles.z > 300) && grounded)
+        {
+            //Rotate Tank
+            gameObject.transform.Rotate(0, turnspeed * Time.deltaTime * horiz, 0);
+            //Move Tank
+            gameObject.transform.Translate(0, 0, movespeed * Time.deltaTime * vert);
+        }
         //Get turret input
         float turrhoriz = 0;
         if (Input.GetKey(KeyCode.Q))
@@ -68,7 +120,7 @@ public class Tank : MonoBehaviour
         }
         //TurnTurret
         turretobj.transform.Rotate(0, turretturnspeed * Time.deltaTime * turrhoriz, 0);
-        
+
         if (Input.GetKeyDown(KeyCode.Space))
         {
             //Shoot bullet

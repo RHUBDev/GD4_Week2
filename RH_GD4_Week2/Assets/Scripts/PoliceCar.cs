@@ -34,18 +34,16 @@ public class PoliceCar : MonoBehaviour
     {
         if (navagent.enabled)
         {
-            Debug.Log("1");
             //Set NavMeshAgent destination and move, if enabled
             navagent.SetDestination(tank.transform.position);
             bool boo = navagent.CalculatePath(navagent.destination, navagent.path);
             if (boo && health > 0)
             {
-                Debug.Log("2");
                 navagent.Move((navagent.steeringTarget - navagent.transform.position).normalized * navagent.speed * Time.deltaTime);
             }
         }
         //If car is flipped, kill it and respawn
-        if ((transform.eulerAngles.x > 60 || transform.eulerAngles.x < -60 || transform.eulerAngles.z > 60 || transform.eulerAngles.z < -60) && !dead)
+        if (!(transform.eulerAngles.x < 60 || transform.eulerAngles.x > 300) || !(transform.eulerAngles.z < 60 || transform.eulerAngles.z > 300) && !dead)
         {
             dead = true;
             health = 0f;
