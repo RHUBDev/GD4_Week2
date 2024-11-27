@@ -14,10 +14,16 @@ public class Tank : MonoBehaviour
     public Transform gunpoint;
     private float bulletforce = 40f;
     public TMP_Text mainmessage;
+    public TMP_Text scoremessage;
+    public TMP_Text damagemessage;
+    public TMP_Text endmessage;
+    private int score = 0;
+    private float damagetime = 2f;
     // Start is called before the first frame update
     void Start()
     {
         //Start game paused
+        score = 0;
         Time.timeScale = 0.0f;
         StartCoroutine(DoStart());
     }
@@ -25,7 +31,9 @@ public class Tank : MonoBehaviour
     public IEnumerator DoEnd()
     {
         //Show end game message, and restart after 3 seconds
+        damagemessage.text = "";
         mainmessage.text = "BUSTED!";
+        endmessage.text = ""
         yield return new WaitForSecondsRealtime(3);
         SceneManager.LoadScene("OnePlayer");
     }
@@ -64,8 +72,29 @@ public class Tank : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space))
         {
             //Shoot bullet
-            GameObject bullet1 = Instantiate(bulletprefab, gunpoint.transform.position, gunpoint.transform.rotation);
-            bullet1.GetComponent<Rigidbody>().AddForce(gunpoint.transform.forward * bulletforce, ForceMode.Impulse);
+            Bullet bullet1 = Instantiate(bulletprefab, gunpoint.transform.position, gunpoint.transform.rotation).GetComponent<Bullet>();
+            bullet1.tank = this;
+            bullet1.gameObject.GetComponent<Rigidbody>().AddForce(gunpoint.transform.forward * bulletforce, ForceMode.Impulse);
         }
+
+        if (damagetime < 2)
+        {
+            damagetime += Time.deltaTime;
+        }
+        else
+        {
+            //Remove damage UI text after 2 seconds
+            damagemessage.text = "";
+        }
+    }
+
+    public void CauseDamage(int amount)
+    {
+        score += amount;
+        //Show damage in UI
+        //I googled how to do the number formatting with .ToString("n0") because I couldn't remember how to do it
+        scoremessage.text = "Damage: $" + score.ToString("n0");
+        damagetime = 0f;
+        damagemessage.text = "+$" + amount.ToString("n0");
     }
 }

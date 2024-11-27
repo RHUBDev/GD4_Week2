@@ -17,6 +17,7 @@ public class PoliceCar : MonoBehaviour
     private bool dead = false;
     private float maxhealth = 100f;
     public Tank tankscript;
+    private Renderer rend;
     // Start is called before the first frame update
     void Start()
     {
@@ -25,6 +26,7 @@ public class PoliceCar : MonoBehaviour
         startrot = transform.rotation;
         //Find fire particles on child transform
         carfire = transform.GetChild(0).gameObject;
+        rend = gameObject.GetComponent<Renderer>();
     }
 
     // Update is called once per frame
@@ -32,11 +34,13 @@ public class PoliceCar : MonoBehaviour
     {
         if (navagent.enabled)
         {
+            Debug.Log("1");
             //Set NavMeshAgent destination and move, if enabled
             navagent.SetDestination(tank.transform.position);
             bool boo = navagent.CalculatePath(navagent.destination, navagent.path);
             if (boo && health > 0)
             {
+                Debug.Log("2");
                 navagent.Move((navagent.steeringTarget - navagent.transform.position).normalized * navagent.speed * Time.deltaTime);
             }
         }
@@ -66,6 +70,7 @@ public class PoliceCar : MonoBehaviour
     IEnumerator Die()
     {
         //The rest of the car killing function
+        rend.material.color = new Color(0.2f, 0.2f, 0.2f);
         dead = true;
         health = 0f;
         navagent.enabled = false;
@@ -83,6 +88,7 @@ public class PoliceCar : MonoBehaviour
         transform.rotation = startrot;
         navagent.enabled = true;
         health = maxhealth;
+        rend.material.color = new Color(1f, 1f, 1f);
         dead = false;
     }
 
