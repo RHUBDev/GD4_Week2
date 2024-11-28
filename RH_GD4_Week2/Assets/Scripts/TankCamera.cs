@@ -8,10 +8,11 @@ public class TankCamera : MonoBehaviour
     private bool isfirstperson = false;
     private Vector3 fpscameraoffset = new Vector3(0f,4f,1.3f);
     private Quaternion fpscameraangle = Quaternion.Euler(10f, 0f, 0f);
+    public int tanknum;
     // Update is called once per frame
     void LateUpdate()
     {
-        if (Input.GetKeyDown(KeyCode.C))
+        if (Input.GetButtonDown("Camera" + tanknum))
         {
             //Toggle camera mode
             isfirstperson = !isfirstperson;

@@ -47,13 +47,21 @@ public class Bullet : MonoBehaviour
                 }
                 else if (collision.collider.gameObject.name.StartsWith("Building_Stadium"))
                 {
-                    tank.CauseDamage(5000000);
+                    tank.CauseDamage(1000000);
                 }
                 else if (collision.collider.gameObject.name.StartsWith("Building_Residential"))
                 {
                     tank.CauseDamage(600000);
                 }
                 else if (collision.collider.gameObject.name.StartsWith("Building_Super"))
+                {
+                    tank.CauseDamage(600000);
+                }
+                else if (collision.collider.gameObject.name.StartsWith("Building_Gas"))
+                {
+                    tank.CauseDamage(600000);
+                }
+                else if (collision.collider.gameObject.name.StartsWith("Building_Factory"))
                 {
                     tank.CauseDamage(600000);
                 }

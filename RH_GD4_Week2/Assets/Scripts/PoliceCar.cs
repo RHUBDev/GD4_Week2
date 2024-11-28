@@ -5,7 +5,7 @@ using UnityEngine.AI;
 
 public class PoliceCar : MonoBehaviour
 {
-    public GameObject tank;
+    public List<Tank> tanks;
     public NavMeshAgent navagent;
     private float movespeed = 5f;
     private NavMeshPath path;
@@ -16,11 +16,13 @@ public class PoliceCar : MonoBehaviour
     public GameObject carsplosion;
     private bool dead = false;
     private float maxhealth = 100f;
-    public Tank tankscript;
+   // public Tank tankscript;
     private Renderer rend;
+    private Tank neartank;
     // Start is called before the first frame update
     void Start()
     {
+        neartank = tanks[0];
         //Save start position and rotation
         startpos = transform.position;
         startrot = transform.rotation;
@@ -32,10 +34,27 @@ public class PoliceCar : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        for(int i = 0; i < tanks.Count; i++)
+        {
+            //Find and follow the nearest live tank
+            if(((tanks[i].transform.position - transform.position).magnitude < (neartank.transform.position - transform.position).magnitude) && !tanks[i].ended)
+            {
+                neartank = tanks[i];
+            }
+            else if (tanks[i].ended)
+            {
+                tanks.Remove(tanks[i]);
+                if (tanks.Count > 0)
+                {
+                    neartank = tanks[0];
+                }
+            }
+        }
+
         if (navagent.enabled)
         {
             //Set NavMeshAgent destination and move, if enabled
-            navagent.SetDestination(tank.transform.position);
+            navagent.SetDestination(neartank.transform.position);
             bool boo = navagent.CalculatePath(navagent.destination, navagent.path);
             if (boo && health > 0)
             {
@@ -95,8 +114,8 @@ public class PoliceCar : MonoBehaviour
         //If we hit the Tank and are not already dead, the player loses!
         if (collision.gameObject.tag == "Tank" && !dead)
         {
-            StartCoroutine(tankscript.DoEnd());
-            Time.timeScale = 0.0f;
+            Tank tank1 = collision.transform.root.gameObject.GetComponent<Tank>();
+            tank1.DoEnd();
         }
     }
 }
