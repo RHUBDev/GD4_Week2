@@ -1425,7 +1425,9 @@ MonoBehaviour:
   scoretext: {fileID: 1942732179}
   rig: {fileID: 825415030}
   splosion: {fileID: 131164, guid: 3c5f4e32698bdb04eaed647f60310510, type: 3}
-  rend: {fileID: 825415032}
+  rend:
+  - {fileID: 825415032}
+  - {fileID: 1831381782}
 --- !u!23 &825415032 stripped
 MeshRenderer:
   m_CorrespondingSourceObject: {fileID: 2300002, guid: af29f0ea7e5403641b3b244ede69c374,
@@ -2708,6 +2710,12 @@ Transform:
 --- !u!1 &1831381780 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 100000, guid: af29f0ea7e5403641b3b244ede69c374,
+    type: 3}
+  m_PrefabInstance: {fileID: 1239094319}
+  m_PrefabAsset: {fileID: 0}
+--- !u!23 &1831381782 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 2300000, guid: af29f0ea7e5403641b3b244ede69c374,
     type: 3}
   m_PrefabInstance: {fileID: 1239094319}
   m_PrefabAsset: {fileID: 0}

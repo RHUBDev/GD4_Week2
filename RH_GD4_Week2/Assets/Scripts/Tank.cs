@@ -227,7 +227,10 @@ public class Tank : MonoBehaviour
                         {
                             int diff = totalscore - highscore;
                             endmessage.text = "Congrats!\n<color=green>+$" + diff.ToString("n0") + "</color>";
-                            PlayerPrefs.SetInt("CoOpHighScore", totalscore);
+                            if (tanknum == 1)
+                            {
+                                PlayerPrefs.SetInt("CoOpHighScore", totalscore);
+                            }
                         }
                         else if (totalscore < highscore)
                         {
